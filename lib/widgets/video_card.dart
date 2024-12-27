@@ -7,9 +7,14 @@ import 'package:youtube_clone/screens/nav_screen.dart';
 
 class VideoCard extends StatelessWidget {
   final Video video;
+  final bool hasPadding;
+  final VoidCallback? onTap;
+
   const VideoCard({
     super.key,
     required this.video,
+    this.hasPadding = false,
+    this.onTap,
   });
 
   @override
@@ -20,20 +25,27 @@ class VideoCard extends StatelessWidget {
         context.read(miniPlayerControllerProvider).state.animateToHeight(
               state: PanelState.MAX,
             );
+        if (onTap != null) {
+          onTap!();
+        }
       },
       child: Column(
         children: [
           Stack(
             children: [
-              Image.network(
-                video.thumbnailUrl,
-                width: double.infinity,
-                height: 220,
-                fit: BoxFit.cover,
+              Padding(
+                padding:
+                    EdgeInsets.symmetric(horizontal: hasPadding ? 12.0 : 0),
+                child: Image.network(
+                  video.thumbnailUrl,
+                  width: double.infinity,
+                  height: 220,
+                  fit: BoxFit.cover,
+                ),
               ),
               Positioned(
                 bottom: 8,
-                right: 8,
+                right: hasPadding ? 20 : 8,
                 child: Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
