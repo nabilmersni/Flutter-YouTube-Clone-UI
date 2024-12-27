@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/all.dart';
 import 'package:miniplayer/miniplayer.dart';
 import 'package:youtube_clone/data.dart';
 import 'package:youtube_clone/screens/home_screen.dart';
+import 'package:youtube_clone/screens/video_screen.dart';
 
 final selectedVideoProvider = StateProvider<Video?>((ref) => null);
 final miniPlayerControllerProvider =
@@ -76,7 +77,8 @@ class _NavScreenState extends State<NavScreen> {
                       if (selectedVideo == null) {
                         return const SizedBox.shrink();
                       }
-                      return Container(
+                      if (height <= _playerMinHeight + 50) {
+                        return Container(
                           color: Theme.of(context).scaffoldBackgroundColor,
                           child: Column(
                             children: [
@@ -139,9 +141,12 @@ class _NavScreenState extends State<NavScreen> {
                                 value: 0.4,
                                 valueColor:
                                     AlwaysStoppedAnimation<Color>(Colors.red),
-                              )
+                              ),
                             ],
-                          ));
+                          ),
+                        );
+                      }
+                      return const VideoScreen();
                     },
                   ),
                 ),
